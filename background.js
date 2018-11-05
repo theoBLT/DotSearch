@@ -2,8 +2,6 @@
 'use strict';
 
 var
-  // airtableUrl = "https://api.airtable.com/v0/appCWEkd1xRl7rETP/shortcuts?&view=Grid%20view",
-  // airtableApiKey = "keyDA3iMtSFG4Kj04",
   airtableAuthentication = "Bearer" + " " + airtableApiKey,
   i,
   Shortcuts = [];
