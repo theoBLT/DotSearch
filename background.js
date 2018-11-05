@@ -127,7 +127,6 @@ function Shortcut(key, content) {
   this.content = content;
 }
 
-
 function setUrl(key, value) {
   localStorage[key] = JSON.stringify(value);
 }
