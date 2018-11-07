@@ -1,3 +1,6 @@
+//TODO: Replace localstorage methods by https://developer.chrome.com/extensions/storage, in order to gain cross-browser synchronization
+//TODO: Add a way to retrieve the Airtable URL and apiKey from the user's browser (popup our onlaunch page)
+
 // For the sport
 'use strict';
 
