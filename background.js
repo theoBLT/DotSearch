@@ -14,10 +14,11 @@ var
 syncShortcutsFromAirable(airtableUrl,airtableAuthentication);
 
 // The first time the extension is installed, guide users to a set-up page
-// TODO: add if(object.reason === 'install') to only fire this on installs rather than updates
-// chrome.tabs.create({url:chrome.extension.getURL("help.html")} for a local page
+// TODO: Remove the "object.reason" === update when debugging is over, so this actually pops up only at installs
 chrome.runtime.onInstalled.addListener(function (object) {
-  chrome.runtime.openOptionsPage();
+  if (object.reason === 'install' || object.reason === 'update') {
+    chrome.runtime.openOptionsPage();
+  }
   });
 
 
