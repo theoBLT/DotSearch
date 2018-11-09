@@ -11,37 +11,7 @@ var
 
 // Getting the data from airtable - what's beautiful is this only runs everytime the browser starts
 // So, no risk to hit airtable's 5 calls/second threshold
-fetch(airtableUrl, {
-    headers: {
-      "Authorization": airtableAuthentication
-    }
-  })
-  .then(response => response.json())
-  .then(records => {
-    for (i = 0; i < records.records.length; i++) {
-      var newShortcutContent = new Shortcutcontent(
-        records.records[i].fields.url,
-        records.records[i].fields.explanation,
-        records.records[i].fields.search_url
-      );
-      var newShortcut = new Shortcut(
-        records.records[i].fields.key,
-        newShortcutContent
-      );
-      Shortcuts.push(newShortcut);
-    }
-    console.log(JSON.stringify(Shortcuts));
-
-    // Saving the above handy shortcuts into localStorage
-    // We will only use localStorage from there on to access data
-    Shortcuts.forEach(function(shortcut) {
-      setUrl(
-        shortcut.key,
-        shortcut.content
-      );
-    });
-  })
-  .catch(error => console.log("An error happened when fetching data from airtable" + " • " + error));
+syncShortcutsFromAirable(airtableUrl,airtableAuthentication);
 
 // This event is triggered everytime the user writes something into Chrome's omnibox
 chrome.omnibox.onInputChanged.addListener(
@@ -98,8 +68,45 @@ chrome.omnibox.onInputEntered.addListener(
 
 chrome.browserAction.onClicked.addListener(
   function(tab) { 
+    syncShortcutsFromAirable(airtableUrl,airtableAuthentication);
     alert("Your shortcuts have been updated to the latest version.\nYou're now 0.01% more efficient! 💪");
   });
+
+// Updating data from Airtable
+function syncShortcutsFromAirable(airtableUrl,airtableAuthentication) {
+  fetch(airtableUrl, {
+    headers: {
+      "Authorization": airtableAuthentication
+    }
+  })
+  .then(response => response.json())
+  .then(records => {
+    for (i = 0; i < records.records.length; i++) {
+      var newShortcutContent = new Shortcutcontent(
+        records.records[i].fields.url,
+        records.records[i].fields.explanation,
+        records.records[i].fields.search_url
+      );
+      var newShortcut = new Shortcut(
+        records.records[i].fields.key,
+        newShortcutContent
+      );
+      Shortcuts.push(newShortcut);
+    }
+    console.log(JSON.stringify(Shortcuts));
+
+    // Saving the above handy shortcuts into localStorage
+    // We will only use localStorage from there on to access data
+    Shortcuts.forEach(function(shortcut) {
+      setUrl(
+        shortcut.key,
+        shortcut.content
+      );
+    });
+  })
+  .catch(error => console.log("An error happened when fetching data from airtable" + " • " + error));
+}
+
 
 // Analysing whether the input from users is simple or multiple and providing useful objects
 function queryParsing(user_query) {
