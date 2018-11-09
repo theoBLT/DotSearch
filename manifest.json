@@ -7,6 +7,10 @@
  "browser_action": {
   "default_title": "Update your shortcuts! ⚡️"
  },
+ "options_ui": {
+  "page": "setup.html",
+  "open_in_tab": false
+},
  "omnibox": { "keyword" : "qq" },
  "icons": {
    "16": "16-full-color.png",

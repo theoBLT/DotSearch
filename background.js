@@ -13,6 +13,14 @@ var
 // So, no risk to hit airtable's 5 calls/second threshold
 syncShortcutsFromAirable(airtableUrl,airtableAuthentication);
 
+// The first time the extension is installed, guide users to a set-up page
+// TODO: add if(object.reason === 'install') to only fire this on installs rather than updates
+// chrome.tabs.create({url:chrome.extension.getURL("help.html")} for a local page
+chrome.runtime.onInstalled.addListener(function (object) {
+  chrome.runtime.openOptionsPage();
+  });
+
+
 // This event is triggered everytime the user writes something into Chrome's omnibox
 chrome.omnibox.onInputChanged.addListener(
   function(text, suggest) {
