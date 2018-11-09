@@ -8,7 +8,7 @@
   "default_title": "Update your shortcuts! ⚡️"
  },
  "options_ui": {
-  "page": "setup.html",
+  "page": "setup/setup.html",
   "open_in_tab": false
 },
  "omnibox": { "keyword" : "qq" },
