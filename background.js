@@ -96,6 +96,11 @@ chrome.omnibox.onInputEntered.addListener(
     };
   });
 
+chrome.browserAction.onClicked.addListener(
+  function(tab) { 
+    alert("Your shortcuts have been updated to the latest version.\nYou're now 0.01% more efficient! 💪");
+  });
+
 // Analysing whether the input from users is simple or multiple and providing useful objects
 function queryParsing(user_query) {
   var parsed_query = {

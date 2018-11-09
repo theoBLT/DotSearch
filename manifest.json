@@ -4,6 +4,7 @@
  "description": "Access all of Qonto's universe in a second.⚡️",
  "version": "4",
  "author": "Théo Blochet",
+ "browser_action": {},
  "omnibox": { "keyword" : "qq" },
  "icons": {
    "16": "16-full-color.png",
@@ -16,3 +17,4 @@
  },
  "permissions": ["activeTab","storage"]
 }
+
