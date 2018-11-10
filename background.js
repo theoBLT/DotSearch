@@ -17,13 +17,8 @@ chrome.runtime.onInstalled.addListener(function (object) {
   // When the value of either the API key or API url is changed, update everything
 chrome.storage.onChanged.addListener(function(changes, area) {
     if (area == "sync" && "airtableUrl" in changes) {
-        var 
-          airtableUrl = changes.airtableUrl.newValue,
-          airtableApiKey = changes.airtableApiKey.newValue,
-          airtableAuthentication = "Bearer" + " " + airtableApiKey;
-
           // Getting data from Airtable
-          syncShortcutsFromAirtable(airtableUrl,airtableAuthentication);
+          syncShortcutsFromAirtable();
     }
 });
 
@@ -84,44 +79,57 @@ chrome.omnibox.onInputEntered.addListener(
 
 chrome.browserAction.onClicked.addListener(
   function(tab) { 
-    syncShortcutsFromAirtable(airtableUrl,airtableAuthentication);
+    syncShortcutsFromAirtable();
     alert("Your shortcuts have been updated to the latest version.\nYou're now 0.01% more efficient! 💪");
   });
 
 // Updating data from Airtable
-function syncShortcutsFromAirtable(airtableUrl,airtableAuthentication) {
-  fetch(airtableUrl, {
-    headers: {
-      "Authorization": airtableAuthentication
-    }
-  })
-  .then(response => response.json())
-  .then(records => {
-    for (i = 0; i < records.records.length; i++) {
-      var newShortcutContent = new Shortcutcontent(
-        records.records[i].fields.url,
-        records.records[i].fields.explanation,
-        records.records[i].fields.search_url
-      );
-      var newShortcut = new Shortcut(
-        records.records[i].fields.key,
-        newShortcutContent
-      );
-      Shortcuts.push(newShortcut);
-    }
-    console.log(JSON.stringify(Shortcuts));
+function syncShortcutsFromAirtable() {
 
-    // Saving the above handy shortcuts into localStorage
-    // We will only use localStorage from there on to access data
-    Shortcuts.forEach(function(shortcut) {
-      setUrl(
-        shortcut.key,
-        shortcut.content
-      );
-    });
+  // Retrieveing the latest creds from storage
+  chrome.storage.sync.get(['airtableUrl','airtableApiKey'], function(results) {
+    var airtableUrl = results.airtableUrl,
+        airtableApiKey = results.airtableApiKey,
+        airtableAuthentication = "Bearer" + " " + airtableApiKey;
+    console.log(airtableUrl);
+    console.log(airtableApiKey);
+    console.log(airtableAuthentication);
+
+    // Getting the data from airtable with the above credentials
+    fetch(airtableUrl, {
+      headers: {
+        "Authorization": airtableAuthentication
+      }
+    })
+    .then(response => response.json())
+    .then(records => {
+      for (i = 0; i < records.records.length; i++) {
+        var newShortcutContent = new Shortcutcontent(
+          records.records[i].fields.url,
+          records.records[i].fields.explanation,
+          records.records[i].fields.search_url
+        );
+        var newShortcut = new Shortcut(
+          records.records[i].fields.key,
+          newShortcutContent
+        );
+        Shortcuts.push(newShortcut);
+      }
+      console.log(JSON.stringify(Shortcuts));
+  
+      // Saving the above handy shortcuts into localStorage
+      // We will only use localStorage from there on to access data
+      Shortcuts.forEach(function(shortcut) {
+        setUrl(
+          shortcut.key,
+          shortcut.content
+        );
+      });
+    })
+    .catch(error => console.log("An error happened when fetching data from airtable" + " • " + error));
   })
-  .catch(error => console.log("An error happened when fetching data from airtable" + " • " + error));
-}
+  };
+  
 
 
 // Analysing whether the input from users is simple or multiple and providing useful objects
