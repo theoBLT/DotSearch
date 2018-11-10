@@ -1,5 +1,5 @@
 //TODO: Replace localstorage methods by https://developer.chrome.com/extensions/storage, in order to gain cross-browser synchronization
-
+// TODO: Give another way to access preferences than uninstalling/reinstalling the app
 // For the sport
 'use strict';
 
