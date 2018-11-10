@@ -18,7 +18,7 @@
    "128":"128-full-color.png"
  },
  "background": {
-   "scripts": ["env.js","background.js"],
+   "scripts": ["background.js"],
    "persistent": false
  },
  "permissions": ["activeTab","storage"]

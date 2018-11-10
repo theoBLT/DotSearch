@@ -1,17 +1,10 @@
 //TODO: Replace localstorage methods by https://developer.chrome.com/extensions/storage, in order to gain cross-browser synchronization
-//TODO: Add a way to retrieve the Airtable URL and apiKey from the user's browser (popup our onlaunch page)
 
 // For the sport
 'use strict';
 
-var
-  airtableAuthentication = "Bearer" + " " + airtableApiKey,
-  i,
-  Shortcuts = [];
-
-// Getting the data from airtable - what's beautiful is this only runs everytime the browser starts
-// So, no risk to hit airtable's 5 calls/second threshold
-syncShortcutsFromAirable(airtableUrl,airtableAuthentication);
+var i,
+    Shortcuts = [];
 
 // The first time the extension is installed, guide users to a set-up page
 // TODO: Remove the "object.reason" === update when debugging is over, so this actually pops up only at installs
@@ -20,6 +13,20 @@ chrome.runtime.onInstalled.addListener(function (object) {
     chrome.runtime.openOptionsPage();
   }
   });
+
+  // When the value of either the API key or API url is changed, update everything
+chrome.storage.onChanged.addListener(function(changes, area) {
+    if (area == "sync" && "airtableUrl" in changes) {
+        var 
+          airtableUrl = changes.airtableUrl.newValue,
+          airtableApiKey = changes.airtableApiKey.newValue,
+          airtableAuthentication = "Bearer" + " " + airtableApiKey;
+
+          // Getting data from Airtable
+          syncShortcutsFromAirtable(airtableUrl,airtableAuthentication);
+    }
+});
+
 
 
 // This event is triggered everytime the user writes something into Chrome's omnibox
@@ -77,12 +84,12 @@ chrome.omnibox.onInputEntered.addListener(
 
 chrome.browserAction.onClicked.addListener(
   function(tab) { 
-    syncShortcutsFromAirable(airtableUrl,airtableAuthentication);
+    syncShortcutsFromAirtable(airtableUrl,airtableAuthentication);
     alert("Your shortcuts have been updated to the latest version.\nYou're now 0.01% more efficient! 💪");
   });
 
 // Updating data from Airtable
-function syncShortcutsFromAirable(airtableUrl,airtableAuthentication) {
+function syncShortcutsFromAirtable(airtableUrl,airtableAuthentication) {
   fetch(airtableUrl, {
     headers: {
       "Authorization": airtableAuthentication
