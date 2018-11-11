@@ -1,7 +1,7 @@
 {
  "manifest_version": 2,
- "name": "Power Qontoer ⚡️",
- "description": "Access all of Qonto's universe in a second.⚡️",
+ "name": "Rabbit search ⚡️",
+ "description": "Use short keywords to access all of your company's universe in a second.⚡️",
  "version": "4",
  "author": "Théo Blochet",
  "browser_action": {

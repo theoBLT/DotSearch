@@ -1,5 +1,6 @@
 //TODO: Replace localstorage methods by https://developer.chrome.com/extensions/storage, in order to gain cross-browser synchronization
-// TODO: Give another way to access preferences than uninstalling/reinstalling the app
+// TODO: Fix bug that prevents current key to be shown as suggestion when fully typed
+
 // For the sport
 'use strict';
 
@@ -7,9 +8,8 @@ var i,
     Shortcuts = [];
 
 // The first time the extension is installed, guide users to a set-up page
-// TODO: Remove the "object.reason" === update when debugging is over, so this actually pops up only at installs
 chrome.runtime.onInstalled.addListener(function (object) {
-  if (object.reason === 'install' || object.reason === 'update') {
+  if (object.reason === 'install') {
     chrome.runtime.openOptionsPage();
   }
   });
