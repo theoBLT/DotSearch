@@ -2,7 +2,7 @@
  "manifest_version": 2,
  "name": "Rabbit search ⚡️",
  "description": "Use short keywords to access all of your company's universe in a second.⚡️",
- "version": "4",
+ "version": "0.0.0.1",
  "author": "Théo Blochet",
  "browser_action": {
   "default_title": "Update your shortcuts! ⚡️"
@@ -13,9 +13,9 @@
 },
  "omnibox": { "keyword" : "qq" },
  "icons": {
-   "16": "16-full-color.png",
-   "48": "48-full-color.png",
-   "128":"128-full-color.png"
+   "16": "16.png",
+   "48": "48.png",
+   "128":"128.png"
  },
  "background": {
    "scripts": ["background.js"],

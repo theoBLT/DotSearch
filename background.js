@@ -22,8 +22,6 @@ chrome.storage.onChanged.addListener(function(changes, area) {
     }
 });
 
-
-
 // This event is triggered everytime the user writes something into Chrome's omnibox
 chrome.omnibox.onInputChanged.addListener(
   function(text, suggest) {
@@ -130,7 +128,6 @@ function syncShortcutsFromAirtable() {
   })
   };
   
-
 
 // Analysing whether the input from users is simple or multiple and providing useful objects
 function queryParsing(user_query) {
