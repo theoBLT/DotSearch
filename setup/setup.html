@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+        <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <p class ="intro">
+            This extension fetches all its time-saving keyboard shortcuts from a centralized AirTable database that <b>you</b> own.
+        </p>
+
         <h2>
-            What's the URL to retrieve all records from your airtable base?
+            What AirTable API URL can I fetch all your shortcuts from?
         </h2> 
         <p>To find out, <ul>
             <li>Open <a href="https://airtable.com/api" target=_blank>Airtable's API page</a></li>
             <li>Select the base you've created to host your shortcuts</li>
-            <li>In the API documentation's menu, hit the <b>List records</b >item</li>
-            <li>Copy the URL shown in the "Example request", but remove everything after the question mark (?)</li>
+            <li>In the API documentation's menu, hit <b>List records</b></li>
+            <li>Copy the URL shown in the "Example request", but remove everything after the "?"</li>
         </ul>
 
-        <label for="airtableUrl">URL</label>
+        <label for="airtableUrl">AirTable API URL</label>
                 <input type="text" id="airtableUrl" placeholder="https://api.airtable.com/v0/appABCdEFGhijKlMn/sheetname">
         
         <h2>
-            What's your airTable API Key?
+            What AirTable API Key should I use?
          </h2> 
-         To find out, <a href="https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-" target=_blank>follow this helpful guide.</a> Protip: you can create a separate "API user" and share the base with them as read-only. That user's API key will only have read access to the base.</p>
+         To find out, <a href="https://support.airtable.com/hc/en-us/articles/219046777-How-do-I-get-my-API-key-" target=_blank>follow this helpful guide.</a> Protip: you can create a separate "API user" and share the base with that user as read-only. That user's API key will only have read access to the base.</p>
          
-         <label for="airtableApiKey">URL</label>
+         <label for="airtableApiKey">API Key</label>
          <input type="text" id="airtableApiKey" placeholder="keyXXXXXXXXXXXXXX">
-         <button id="save">Save</button>
+         <div id="status"></div> <!-- This is where success or failures will be shown-->
+         <button id="save">Save API settings</button>
         </p>
-    <div id="status"></div> <!-- This is where success or failures will be shown-->
     <script src="setup.js"></script>
     </body>
 </html>

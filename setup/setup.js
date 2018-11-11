@@ -9,10 +9,10 @@ function save_options() {
     }, function() {
       // Update status to let user know options were saved.
       var status = document.getElementById('status');
-      status.textContent = 'Your URL and API keys have been saved, you\'re all set!';
+      status.textContent = 'Your URL and API keys have been saved and synced with your Google profile. You\'re all set!';
       setTimeout(function() {
         status.textContent = '';
-      }, 1000);
+      }, 2500);
     });
   }
   
