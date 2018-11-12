@@ -89,9 +89,6 @@ function syncShortcutsFromAirtable() {
     var airtableUrl = results.airtableUrl,
         airtableApiKey = results.airtableApiKey,
         airtableAuthentication = "Bearer" + " " + airtableApiKey;
-    console.log(airtableUrl);
-    console.log(airtableApiKey);
-    console.log(airtableAuthentication);
 
     // Getting the data from airtable with the above credentials
     fetch(airtableUrl, {
