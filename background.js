@@ -16,8 +16,8 @@ chrome.runtime.onInstalled.addListener(function (object) {
 
   // When the value of either the API key or API url is changed, update everything
 chrome.storage.onChanged.addListener(function(changes, area) {
-    if (area == "sync" && "airtableUrl" in changes) {
-          // Getting data from Airtable
+    if (area == "sync" && ( "airtableUrl" in changes || "airtableApiKey" in changes )) {
+          // Getting or refreshing data from Airtable
           syncShortcutsFromAirtable();
     }
 });
