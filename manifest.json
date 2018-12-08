@@ -1,6 +1,6 @@
 {
  "manifest_version": 2,
- "name": "Rabbit search ⚡️",
+ "name": "DOT search •",
  "description": "Use short keywords to access all of your company's universe in a second.⚡️",
  "version": "0.0.0.1",
  "author": "Théo Blochet",
@@ -11,7 +11,7 @@
   "page": "setup/setup.html",
   "open_in_tab": false
 },
- "omnibox": { "keyword" : "qq" },
+ "omnibox": { "keyword" : "." },
  "icons": {
    "16": "16.png",
    "48": "48.png",

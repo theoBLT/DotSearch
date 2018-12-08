@@ -4,3 +4,6 @@ Thumbs.db
 
 # Env
 env.js
+
+# Chrome Store assets
+/chromeStoreAssets
