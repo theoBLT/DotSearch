@@ -1,4 +1,4 @@
-# Chrome GoLinks
+# Dot Search
 
 Superpower your colleague's workflows with shortcuts to your most commonly used URLs, and most common internal searches.
 
