@@ -1,67 +1,68 @@
 :root {
-    --text-color: #4A4A4A;
-    --text-color-lighter: #bdbdbd;
-    --main-action-color: #ffffff;
-    --main-color: #000000;
-    --main-color-darker: #000000;
-    --main-height-factor:2rem;
+  --text-color: #4a4a4a;
+  --text-color-lighter: #bdbdbd;
+  --main-action-color: #ffffff;
+  --main-color: #000000;
+  --main-color-darker: #000000;
+  --main-height-factor: 2rem;
 }
 
 body {
-    color: var(--text-color);
-    margin: 0 1rem;
+  color: var(--text-color);
+  margin: 0 1rem;
 }
 
 a {
-    color:var(--main-color)
+  color: var(--main-color);
 }
 
 h2 {
-    font-size:1rem;
+  font-size: 1rem;
 }
 
 input {
-    display: block;
-    margin-bottom: var(--main-height-factor);
-    height:var(--main-height-factor);
-    width:100%;
-    border: 1px solid var(--text-color-lighter);
+  display: block;
+  margin-bottom: var(--main-height-factor);
+  height: var(--main-height-factor);
+  width: 100%;
+  border: 1px solid var(--text-color-lighter);
 }
 
 label {
-    margin-bottom: .25rem;
-    font-weight: 700;
+  margin-bottom: 0.25rem;
+  font-weight: 700;
 }
 
 button {
-    font-weight: 500;
-    font-size: 1rem;
-    border: 0;
-    height:var(--main-height-factor);
-    width:50%;
-    text-align:center;
-    margin: 0 25%;
-    color:var(--main-action-color);
-    background-color:var(--main-color);
-    cursor:pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  border: 0;
+  height: var(--main-height-factor);
+  width: 50%;
+  text-align: center;
+  margin: 0 25%;
+  color: var(--main-action-color);
+  background-color: var(--main-color);
+  cursor: pointer;
 }
 
-input::placeholder{
-    color:var(--text-color-lighter);
+input::placeholder {
+  color: var(--text-color-lighter);
 }
 
 button:hover {
-    background-color: var(--main-color-darker);
+  background-color: var(--main-color-darker);
 }
 
-button, input {
-    border-radius:3px;
+button,
+input {
+  border-radius: 3px;
 }
 
 #status {
-    margin-bottom: var(--main-height-factor);
-    color:green;
-    font-weight: 400;
-    font-size:.75rem;
-    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  margin-bottom: var(--main-height-factor);
+  color: green;
+  font-weight: 400;
+  font-size: 0.75rem;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
