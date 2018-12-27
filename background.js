@@ -9,14 +9,14 @@ var i,
   Shortcuts = []
 
 // The first time the extension is installed, guide users to a set-up page
-chrome.runtime.onInstalled.addListener(function(object) {
+chrome.runtime.onInstalled.addListener(object => {
   if (object.reason === 'install') {
     chrome.runtime.openOptionsPage()
   }
 })
 
 // When the value of either the API key or API url is changed, update everything
-chrome.storage.onChanged.addListener(function(changes, area) {
+chrome.storage.onChanged.addListener((changes, area) => {
   if (
     area == 'sync' &&
     ('airtableUrl' in changes || 'airtableApiKey' in changes)
@@ -27,14 +27,16 @@ chrome.storage.onChanged.addListener(function(changes, area) {
 })
 
 // This event is triggered everytime the user writes something into Chrome's omnibox
-chrome.omnibox.onInputChanged.addListener(function(text, suggest) {
+chrome.omnibox.onInputChanged.addListener((text, suggest) => {
   if (text.includes(' ')) {
     var search = text.split(/\s(.+)/)[1]
     text = text.split(/\s(.+)/)[0]
     suggest(
       // Fetches all of the shortcut keys in local storage
-      Object.getOwnPropertyNames(localStorage)
-        .map(function(key) {
+      Object.entries(localStorage)
+        .map(entry => {
+          let [key] = entry
+          console.log(key)
           // For each of these keys, return the content and description expected of the "suggest" Chrome function
           return {
             content: key,
@@ -55,24 +57,19 @@ chrome.omnibox.onInputChanged.addListener(function(text, suggest) {
   } else {
     suggest(
       // Fetches all of the shortcut keys in local storage
-      Object.getOwnPropertyNames(localStorage)
-        .map(function(key) {
+      Object.entries(localStorage)
+        .map(entry => {
+          let [key, value] = entry
+
           // For each of these keys, return the content and description expected of the "suggest" Chrome function
           return {
             content: key,
-            description:
-              key +
-              ' • ' +
-              ' <match> ' +
-              JSON.parse(localStorage[key]).explanation +
-              '</match>' +
-              ' • ' +
-              '<url> ' +
-              JSON.parse(localStorage[key]).url +
-              '</url>'
+            description: `${key} • <match>${
+              JSON.parse(value).explanation
+            }</match> • <url>${JSON.parse(value).url}</url>`
           }
         })
-        .filter(function(item) {
+        .filter(item => {
           // Returns the item if the text entered is part of the "content" or "description"
           return item.content.includes(text) || item.description.includes(text)
         })
@@ -81,7 +78,7 @@ chrome.omnibox.onInputChanged.addListener(function(text, suggest) {
 })
 
 // This event is fired with the user accepts the input in the omnibox
-chrome.omnibox.onInputEntered.addListener(function(text) {
+chrome.omnibox.onInputEntered.addListener(text => {
   var parsed_query = queryParsing(text)
   if (parsed_query.isMultiple === true) {
     getSearchUrlFromKey(parsed_query.search_key, parsed_query.search_param)
@@ -91,7 +88,7 @@ chrome.omnibox.onInputEntered.addListener(function(text) {
   }
 })
 
-chrome.browserAction.onClicked.addListener(function(tab) {
+chrome.browserAction.onClicked.addListener(tab => {
   syncShortcutsFromAirtable()
   alert(
     "Your shortcuts have been updated to the latest version.\nYou're now 0.01% more efficient! 💪"
@@ -101,7 +98,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 // Updating data from Airtable
 function syncShortcutsFromAirtable() {
   // Retrieveing the latest creds from storage
-  chrome.storage.sync.get(['airtableUrl', 'airtableApiKey'], function(results) {
+  chrome.storage.sync.get(['airtableUrl', 'airtableApiKey'], results => {
     var airtableUrl = results.airtableUrl,
       airtableApiKey = results.airtableApiKey,
       airtableAuthentication = 'Bearer' + ' ' + airtableApiKey
@@ -203,7 +200,7 @@ function goToPage(url) {
       active: true,
       currentWindow: true
     },
-    function(tabs) {
+    tabs => {
       chrome.tabs.update(tabs[0].id, {
         url: url
       })

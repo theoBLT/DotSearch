@@ -8,7 +8,7 @@ function save_options() {
       airtableUrl: apiUrl,
       airtableApiKey: apiKey
     },
-    function() {
+    () => {
       // Update status to let user know options were saved.
       var status = document.getElementById('status')
       status.textContent =
@@ -29,7 +29,7 @@ function restore_options() {
       airtableUrl: '',
       airtableApiKey: ''
     },
-    function(items) {
+    items => {
       document.getElementById('airtableUrl').value = items.airtableUrl
       document.getElementById('airtableApiKey').value = items.airtableApiKey
     }
