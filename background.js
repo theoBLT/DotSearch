@@ -1,6 +1,6 @@
 //TODO: Replace localstorage methods by https://developer.chrome.com/extensions/storage, in order to gain cross-browser synchronization
 // TODO: Fix bug that prevents current key to be shown as suggestion when fully typed
-// TODO: Use storage.managed to pull API creds and URL from devops
+// TODO: Use storage.managed to pull API creds and URL from Storage managed by the google user's domain administrator. Chrome.storage.managed allows us to have read-only access to this data. This would help set-up the extension across the whole company, using the same shared set of credentials (that is, we could do a one-click install!)
 
 // For the sport
 'use strict'
