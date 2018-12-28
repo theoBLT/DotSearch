@@ -1,5 +1,6 @@
 //TODO: Replace localstorage methods by https://developer.chrome.com/extensions/storage, in order to gain cross-browser synchronization
 // TODO: Fix bug that prevents current key to be shown as suggestion when fully typed
+// TODO: Use storage.managed to pull API creds and URL from devops
 
 // For the sport
 'use strict'
