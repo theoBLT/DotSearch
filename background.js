@@ -40,13 +40,9 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
           // For each of these keys, return the content and description expected of the "suggest" Chrome function
           return {
             content: key,
-            description:
-              '<dim>Search</dim> <url>' +
-              capitalizeFirstLetter(key) +
-              '</url><dim> for </dim>' +
-              '<match>' +
-              search +
-              '</match>'
+            description: `<dim>Search</dim> <url> ${capitalizeFirstLetter(
+              key
+            )} </url> <dim> for </dim> <match>${search}</match>`
           }
         })
         .filter(function(item) {
@@ -101,14 +97,10 @@ function syncShortcutsFromAirtable() {
   chrome.storage.sync.get(['airtableUrl', 'airtableApiKey'], results => {
     var airtableUrl = results.airtableUrl,
       airtableApiKey = results.airtableApiKey,
-      airtableAuthentication = 'Bearer' + ' ' + airtableApiKey
+      Authorization = `Bearer ${airtableApiKey}`
 
     // Getting the data from airtable with the above credentials
-    fetch(airtableUrl, {
-      headers: {
-        Authorization: airtableAuthentication
-      }
-    })
+    fetch(airtableUrl, { headers: { Authorization } })
       .then(response => response.json())
       .then(records => {
         for (i = 0; i < records.records.length; i++) {
@@ -133,7 +125,7 @@ function syncShortcutsFromAirtable() {
       })
       .catch(error =>
         console.log(
-          'An error happened when fetching data from airtable' + ' • ' + error
+          `An error happened when fetching data from airtable • ${error}`
         )
       )
   })
