@@ -28,49 +28,37 @@ chrome.storage.onChanged.addListener((changes, area) => {
 
 // This event is triggered everytime the user writes something into Chrome's omnibox
 chrome.omnibox.onInputChanged.addListener((text, suggest) => {
-  if (text.includes(' ')) {
-    var search = text.split(/\s(.+)/)[1]
-    text = text.split(/\s(.+)/)[0]
-    suggest(
-      // Fetches all of the shortcut keys in local storage
-      Object.entries(localStorage)
-        .map(entry => {
-          let [key] = entry
-          console.log(key)
-          // For each of these keys, return the content and description expected of the "suggest" Chrome function
-          return {
-            content: key,
-            description: `<dim>Search</dim> <url> ${capitalizeFirstLetter(
-              key
-            )} </url> <dim> for </dim> <match>${search}</match>`
-          }
-        })
-        .filter(function(item) {
-          // Returns the item if the text entered is part of the "content" or "description"
-          return item.content.includes(text)
-        })
-    )
-  } else {
-    suggest(
-      // Fetches all of the shortcut keys in local storage
-      Object.entries(localStorage)
-        .map(entry => {
-          let [key, value] = entry
+  var createdList = Object.entries(localStorage).map(entry => {
+    let [key, value] = entry
+    console.log(entry, key, value)
+    let description = ''
+    if (text.includes(' ')) {
+      let search = text.split(/\s(.+)/)[1]
+      text = text.split(/\s(.+)/)[0]
+      description = `<dim>Search</dim> <url> ${capitalizeFirstLetter(
+        key
+      )} </url> <dim> for </dim> <match>${search}</match>`
+    } else {
+      description = `${key} • <match>${
+        JSON.parse(value).explanation
+      }</match> • <url>${JSON.parse(value).url}</url>`
+    }
 
-          // For each of these keys, return the content and description expected of the "suggest" Chrome function
-          return {
-            content: key,
-            description: `${key} • <match>${
-              JSON.parse(value).explanation
-            }</match> • <url>${JSON.parse(value).url}</url>`
-          }
-        })
-        .filter(item => {
-          // Returns the item if the text entered is part of the "content" or "description"
-          return item.content.includes(text) || item.description.includes(text)
-        })
-    )
-  }
+    // For each of these keys, return the content and description expected of the "suggest" Chrome function
+    return {
+      description,
+      content: key
+    }
+  })
+  console.log('1', createdList)
+
+  var filteredList = createdList.filter(function(item) {
+    // Returns the item if the text entered is part of the "content" or "description"
+    return item.content.includes(text) || item.description.includes(text)
+  })
+  console.log('2', filteredList)
+
+  suggest(filteredList)
 })
 
 // This event is fired with the user accepts the input in the omnibox
