@@ -30,7 +30,6 @@ chrome.storage.onChanged.addListener((changes, area) => {
 chrome.omnibox.onInputChanged.addListener((text, suggest) => {
   var createdList = Object.entries(localStorage).map(entry => {
     let [key, value] = entry
-    console.log(entry, key, value)
     let description = ''
     if (text.includes(' ')) {
       let search = text.split(/\s(.+)/)[1]
@@ -45,18 +44,17 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
     }
 
     // For each of these keys, return the content and description expected of the "suggest" Chrome function
+
     return {
       description,
       content: key
     }
   })
-  console.log('1', createdList)
 
   var filteredList = createdList.filter(function(item) {
     // Returns the item if the text entered is part of the "content" or "description"
     return item.content.includes(text) || item.description.includes(text)
   })
-  console.log('2', filteredList)
 
   suggest(filteredList)
 })
